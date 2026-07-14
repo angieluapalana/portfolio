@@ -172,6 +172,7 @@
     line-height: 1.7;
     padding-left: 8px;
   }
+  .toc-nav { display: block; }
   .toc {
     list-style: none;
     margin: 32px 0 0;
@@ -207,6 +208,7 @@
     box-shadow: 0 6px 18px -12px rgba(var(--shadow), 0.5), inset 0 0 0 1px var(--glass-border);
   }
   .toc a.active .idx { color: var(--accent); }
+  .menu-btn { display: none; }
   .side-foot {
     margin-top: auto;
     padding-top: 24px;
@@ -383,6 +385,15 @@
     inset: 0;
     background: linear-gradient(180deg, var(--veil) 0%, var(--veil-soft) 55%, var(--veil) 100%);
   }
+  .hero-video::-webkit-media-controls,
+  .hero-video::-webkit-media-controls-start-playback-button,
+  .hero-video::-webkit-media-controls-play-button {
+    display: none !important;
+    -webkit-appearance: none;
+    opacity: 0 !important;
+  }
+  .hero-video.video-off { opacity: 0; }
+  .hero-video { transition: opacity .4s ease; }
   @media (prefers-reduced-motion: reduce) {
     .hero-video { display: none; }
   }
@@ -910,23 +921,47 @@
     }
     .brand { flex: none; padding-left: 0; }
     .side-label { display: none; }
+    .menu-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px; height: 40px;
+      margin-left: auto;
+      border-radius: 50%;
+      border: 1px solid var(--glass-border);
+      background: var(--glass-strong);
+      color: var(--ink);
+      cursor: pointer;
+      flex: none;
+    }
+    .menu-btn svg { width: 18px; height: 18px; }
+    .toc-nav {
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: var(--glass-strong);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid var(--glass-border);
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height .3s ease, opacity .25s ease;
+    }
+    .side.menu-open .toc-nav {
+      max-height: calc(100vh - 60px);
+      max-height: calc(100svh - 60px);
+      opacity: 1;
+      overflow-y: auto;
+    }
     .toc {
       margin: 0;
-      flex-direction: row;
-      gap: 4px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      flex: 1;
+      flex-direction: column;
+      gap: 2px;
+      padding: 12px clamp(14px, 4vw, 24px) 16px;
     }
-    .toc::-webkit-scrollbar { display: none; }
-    .toc {
-      mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 28px), transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 28px), transparent 100%);
-    }
-    .toc a { padding: 7px 12px; white-space: nowrap; }
-    .toc a .idx { display: none; }
-    .side-foot { margin: 0; padding: 0; flex-direction: row; align-items: center; gap: 12px; }
+    .toc a { padding: 11px 14px; }
+    .side-foot { margin: 0; padding: 0; flex-direction: row; align-items: center; gap: 10px; flex: none; }
     .toggle-row .toggle-label { display: none; }
     .content { margin-left: 0; padding-top: calc(66px + env(safe-area-inset-top, 0px)); }
     .hero-inner { padding-bottom: 240px; }
@@ -950,16 +985,18 @@
   @media (max-width: 560px) {
     .tool-groups { grid-template-columns: 1fr; }
     .hero-stats {
-      gap: 10px;
-      padding: 14px 16px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 14px 12px;
       bottom: 84px;
+      text-align: center;
     }
-    .hero-stats > div { min-width: 0; flex: 1; }
-    .hero-stats .stat-num { font-size: 20px; }
-    .hero-stats .stat-label { white-space: normal; font-size: 9px; line-height: 1.4; }
+    .hero-stats > div { min-width: 0; }
+    .hero-stats .stat-num { font-size: 21px; }
+    .hero-stats .stat-label { white-space: normal; font-size: 9px; line-height: 1.4; margin-top: 5px; }
     .hero-inner { padding-bottom: 220px; }
     .hero h1 { font-size: clamp(38px, 12vw, 44px); }
-    .toc a { padding: 7px 10px; font-size: 12.5px; }
   }
 
 </style>
@@ -970,7 +1007,10 @@
   <a class="brand" href="#top">anj</a>
   <p class="side-label">Creative Operations<br>&amp; Marketing Partner</p>
 
-  <nav aria-label="Page sections">
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="17" x2="20" y2="17"></line></svg>
+  </button>
+  <nav aria-label="Page sections" class="toc-nav" id="tocNav">
     <ul class="toc" id="toc">
       <li><a href="#top" class="active"><span class="idx">01</span>Intro</a></li>
       <li><a href="#about"><span class="idx">02</span>About</a></li>
@@ -1391,6 +1431,57 @@
       if (window.scrollY < 80) setActive('top');
     }, { passive: true });
 
+
+    /* Mobile hamburger menu */
+    var side = document.querySelector('.side');
+    var menuBtn = document.getElementById('menuBtn');
+    if (menuBtn) {
+      menuBtn.addEventListener('click', function () {
+        var open = side.classList.toggle('menu-open');
+        menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('#toc a'), function (a) {
+        a.addEventListener('click', function () {
+          side.classList.remove('menu-open');
+          menuBtn.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') { side.classList.remove('menu-open'); menuBtn.setAttribute('aria-expanded', 'false'); }
+      });
+    }
+
+    /* Hero video: force autoplay + loop, recover from iOS Low Power Mode */
+    var heroVid = document.querySelector('.hero-video');
+    if (heroVid && !reduced) {
+      heroVid.muted = true;
+      heroVid.loop = true;
+      heroVid.setAttribute('muted', '');
+      var tries = 0;
+      function tryPlay() {
+        var p = heroVid.play();
+        if (p && p.catch) {
+          p.then(function () { heroVid.classList.remove('video-off'); })
+           .catch(function () {
+             tries++;
+             if (tries === 1) heroVid.classList.add('video-off');
+           });
+        }
+      }
+      tryPlay();
+      ['touchstart', 'click', 'scroll'].forEach(function (evt) {
+        window.addEventListener(evt, function retry() {
+          if (heroVid.paused) tryPlay();
+          if (!heroVid.paused) window.removeEventListener(evt, retry);
+        }, { passive: true });
+      });
+      heroVid.addEventListener('ended', function () { heroVid.currentTime = 0; tryPlay(); });
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden && heroVid.paused) tryPlay();
+      });
+    } else if (heroVid && reduced) {
+      heroVid.classList.add('video-off');
+    }
 
     /* Media lightbox (zoom toggles) */
     var lb = document.getElementById('lightbox');
