@@ -51,6 +51,7 @@
     --chip: rgba(30, 50, 90, 0.08);
     --accent: rgba(30, 50, 90, 0.9);
     --pop: #3f6ad8;
+    --menu-bg: rgba(243, 246, 248, 0.94);
     --veil: rgba(243, 246, 248, 0.62);
     --veil-soft: rgba(243, 246, 248, 0.34);
     --blob-a: #c7dcf2;
@@ -83,6 +84,7 @@
     --chip: rgba(231, 235, 244, 0.10);
     --accent: #a7bce4;
     --pop: #9fb6ee;
+    --menu-bg: rgba(15, 18, 25, 0.96);
     --veil: rgba(10, 13, 19, 0.66);
     --veil-soft: rgba(10, 13, 19, 0.42);
     --blob-a: #1d2b45;
@@ -939,7 +941,8 @@
       position: absolute;
       top: 100%;
       left: 0; right: 0;
-      background: var(--glass-strong);
+      background: var(--menu-bg);
+      box-shadow: 0 24px 40px -24px rgba(var(--shadow), 0.5);
       backdrop-filter: blur(22px);
       -webkit-backdrop-filter: blur(22px);
       border-bottom: 1px solid var(--glass-border);
