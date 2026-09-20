@@ -558,8 +558,6 @@
     border-radius: 1.4rem;
     padding: 28px 26px 26px;
     position: relative;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     transition: transform .22s ease, box-shadow .22s ease;
   }
   .card:hover {
@@ -612,8 +610,6 @@
     border: 1px solid var(--glass-border);
     border-radius: 1.2rem;
     padding: 24px 22px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
   }
   .focus-cell .n { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint); }
   .focus-cell h3 { font-size: 17px; margin: 10px 0 6px; }
@@ -646,7 +642,8 @@
   }
   .media-slot svg { width: 30px; height: 30px; opacity: 0.6; }
   .media-slot > img, .media-slot > video { width: 100%; height: 100%; object-fit: cover; }
-  .media-frame { position: relative; border-style: solid; }
+  .media-frame { position: relative; border-style: solid; transform: translateZ(0); isolation: isolate; }
+  .work-card:hover { transform: none; }
   .zoom-btn {
     position: absolute;
     top: 10px; right: 10px;
@@ -819,8 +816,6 @@
     border: 1px solid var(--glass-border);
     border-radius: 1.2rem;
     padding: 22px 20px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
   }
   .tool-group h3 {
     font-family: var(--font-mono);
@@ -858,8 +853,6 @@
     background: var(--glass-strong);
     border: 1px solid var(--glass-border);
     border-radius: 1.4rem;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
   }
   .tl-date {
     font-family: var(--font-mono);
@@ -886,8 +879,6 @@
     border-radius: 1.4rem;
     padding: 30px 24px;
     position: relative;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
   }
   .testi-card blockquote {
     font-size: 15.5px;
@@ -910,8 +901,6 @@
     background: var(--glass-strong);
     border: 1px solid var(--glass-border);
     border-radius: 1.6rem;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
   }
   .referral-inner {
     padding: clamp(32px, 5vw, 56px);
@@ -962,8 +951,6 @@
     border-radius: 999px;
     background: var(--glass);
     border: 1px solid var(--glass-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
     transition: color .2s ease, background .2s ease;
   }
   .contact-links a:hover { color: var(--ink); background: var(--glass-strong); }
