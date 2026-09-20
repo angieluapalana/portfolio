@@ -730,6 +730,87 @@
     background: var(--chip);
   }
   .work-card .work-body { padding: 24px 24px 26px; }
+  .cs-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+  .cs-stat {
+    display: inline-flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 8px 13px;
+    border-radius: 12px;
+    background: var(--chip);
+    border: 1px solid var(--glass-border);
+  }
+  .cs-stat-k {
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .cs-stat-v { font-family: var(--font-display); font-weight: 600; font-size: 13px; color: var(--ink); }
+  .cs-toggle {
+    margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 13px;
+    color: var(--accent);
+    background: none;
+    border: none;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+  .cs-chev { width: 16px; height: 16px; transition: transform .25s ease; }
+  .cs-toggle[aria-expanded="true"] .cs-chev { transform: rotate(180deg); }
+  .cs-panel { max-height: 0; overflow: hidden; transition: max-height .4s ease; }
+  .cs-panel.open { max-height: 1600px; }
+  .cs-panel-inner {
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .cs-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 9px;
+  }
+  .cs-block p { color: var(--ink-soft); font-size: 14px; line-height: 1.65; margin: 0; }
+  .cs-steps {
+    margin: 0; padding: 0;
+    list-style: none;
+    counter-reset: cs;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .cs-steps li {
+    counter-increment: cs;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .cs-steps li::before {
+    content: counter(cs, decimal-leading-zero);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--accent);
+    flex: none;
+    min-width: 18px;
+    padding-top: 2px;
+  }
+  .cs-steps li b, .cs-block p b { color: var(--ink); font-weight: 600; }
 
   /* ---------- Tools ---------- */
   .tool-groups { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
@@ -1141,10 +1222,10 @@
   <section id="work" class="reveal">
     <div class="section-head">
       <div>
-        <span class="eyebrow">Latest work</span>
+        <span class="eyebrow">Case studies</span>
         <h2>Recent <span class="hl">projects</span></h2>
       </div>
-      <p class="measure">A sample of what's shipped recently — from <span class="hl-soft">full site builds</span> to the content that fills them.</p>
+      <p class="measure">A closer look at what's shipped recently — the <span class="hl-soft">brief, the process, and the turnaround</span> behind each build.</p>
     </div>
     <div class="work-grid">
       <div class="card work-card">
@@ -1158,6 +1239,13 @@
           <span class="card-tab">Web design</span>
           <h3>Website &amp; Landing Page Design</h3>
           <p>Custom site and landing page design aligned to the client's branding, built with fully functional buttons and integrated back-end systems.</p>
+          <div class="cs-meta"><span class="cs-stat"><span class="cs-stat-k">TAT</span><span class="cs-stat-v">~1 week</span></span><span class="cs-stat"><span class="cs-stat-k">Built in</span><span class="cs-stat-v">GoHighLevel</span></span><span class="cs-stat"><span class="cs-stat-k">Client</span><span class="cs-stat-v">Busy Being Me Preparatory</span></span></div>
+          <button class="cs-toggle" type="button" aria-expanded="false"><span class="cs-label-text">Read the case study</span><svg class="cs-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="cs-panel"><div class="cs-panel-inner">
+            <div class="cs-block"><span class="cs-label">The brief</span><p>Busy Being Me Preparatory had no website at all. Parents had no online way to learn about the daycare, schedule a tour, or enrol their child &mdash; every inquiry was handled manually.</p></div>
+            <div class="cs-block"><span class="cs-label">Process</span><ol class="cs-steps"><li>Mapped the parent journey around three actions &mdash; <b>learn about the daycare, book a tour, then enrol</b> &mdash; and structured the site around them.</li><li>Designed and built the full site in <b>GoHighLevel</b>, aligned to BBMP&rsquo;s branding with fully functional buttons.</li><li>Wired enrolment and tour scheduling end to end, so both run <b>fully automatically</b> with no manual follow-up.</li><li>Added a <b>live chat widget</b> so parents can send inquiries straight from the site.</li><li>Launched the finished site, fully operational.</li></ol></div>
+            <div class="cs-block"><span class="cs-label">Outcome</span><p>BBMP went from no web presence to a fully automated site where parents can enrol, book tours, and get their questions answered live &mdash; delivered in a week.</p></div>
+          </div></div>
         </div>
       </div>
       <div class="card work-card">
@@ -1170,6 +1258,13 @@
           <span class="card-tab">Presentations</span>
           <h3>Presentation &amp; Deck Design</h3>
           <p>Decks built to communicate key messages clearly while reflecting the client's branding and objectives.</p>
+          <div class="cs-meta"><span class="cs-stat"><span class="cs-stat-k">TAT</span><span class="cs-stat-v">1 day</span></span><span class="cs-stat"><span class="cs-stat-k">Built in</span><span class="cs-stat-v">Canva</span></span><span class="cs-stat"><span class="cs-stat-k">Client</span><span class="cs-stat-v">Goodlife with Lindsay</span></span></div>
+          <button class="cs-toggle" type="button" aria-expanded="false"><span class="cs-label-text">Read the case study</span><svg class="cs-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="cs-panel"><div class="cs-panel-inner">
+            <div class="cs-block"><span class="cs-label">The brief</span><p>Lindsay Schilaty, a Feminine Fat Loss Expert, needed a presentation deck for her weight-loss webinar &mdash; clear enough to carry the message and polished enough to match her brand.</p></div>
+            <div class="cs-block"><span class="cs-label">Process</span><ol class="cs-steps"><li>Aligned the deck to Lindsay&rsquo;s <b>Goodlife branding</b> from the first slide.</li><li>Structured each slide around the webinar&rsquo;s <b>key messages</b> so the story lands clearly.</li><li>Fully custom-designed the deck in <b>Canva</b>.</li></ol></div>
+            <div class="cs-block"><span class="cs-label">Outcome</span><p>A fully branded, presentation-ready webinar deck &mdash; turned around in a single day.</p></div>
+          </div></div>
         </div>
       </div>
       <div class="card work-card">
@@ -1189,6 +1284,13 @@
           <span class="card-tab">Email marketing</span>
           <h3>Email Marketing Campaigns</h3>
           <p>Email designs built for two distinct clients, each customized to their audience and goals.</p>
+          <div class="cs-meta"><span class="cs-stat"><span class="cs-stat-k">TAT</span><span class="cs-stat-v">3 campaigns / week</span></span><span class="cs-stat"><span class="cs-stat-k">Built in</span><span class="cs-stat-v">Klaviyo</span></span><span class="cs-stat"><span class="cs-stat-k">Client</span><span class="cs-stat-v">Lolo&rsquo;s Jewelry</span></span></div>
+          <button class="cs-toggle" type="button" aria-expanded="false"><span class="cs-label-text">Read the case study</span><svg class="cs-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="cs-panel"><div class="cs-panel-inner">
+            <div class="cs-block"><span class="cs-label">The brief</span><p>Lolo&rsquo;s Jewelry needed a steady stream of email campaigns built to drive sales, each one tailored to their audience.</p></div>
+            <div class="cs-block"><span class="cs-label">Process</span><ol class="cs-steps"><li>Planned each campaign around a clear <b>sales goal</b>.</li><li>Designed and built the emails in <b>Klaviyo</b>.</li><li>Ran a consistent cadence of <b>three campaigns per week</b>, each customised to audience and offer.</li></ol></div>
+            <div class="cs-block"><span class="cs-label">Outcome</span><p>A reliable, sales-focused email engine sending three tailored campaigns every week.</p></div>
+          </div></div>
         </div>
       </div>
       <div class="card work-card">
@@ -1208,6 +1310,13 @@
           <span class="card-tab">Social content</span>
           <h3>Social Media Content Creation</h3>
           <p>Strategic content aligned with each client's brand voice, goals, and audience — visually engaging, purpose-driven, platform by platform.</p>
+          <div class="cs-meta"><span class="cs-stat"><span class="cs-stat-k">TAT</span><span class="cs-stat-v">Varies by project</span></span><span class="cs-stat"><span class="cs-stat-k">Tools</span><span class="cs-stat-v">CapCut &middot; DaVinci &middot; Canva</span></span><span class="cs-stat"><span class="cs-stat-k">Format</span><span class="cs-stat-v">Short &amp; long-form video</span></span></div>
+          <button class="cs-toggle" type="button" aria-expanded="false"><span class="cs-label-text">Read the case study</span><svg class="cs-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></button>
+          <div class="cs-panel"><div class="cs-panel-inner">
+            <div class="cs-block"><span class="cs-label">The brief</span><p>Multiple clients needed short- and long-form video content, tailored platform by platform to each brand&rsquo;s voice and audience.</p></div>
+            <div class="cs-block"><span class="cs-label">Process</span><ol class="cs-steps"><li>Cut and assembled quick edits in <b>CapCut</b>.</li><li>Colour-graded footage in <b>DaVinci Resolve</b> for a polished finish.</li><li>Built graphics and thumbnails in <b>Canva</b>.</li></ol></div>
+            <div class="cs-block"><span class="cs-label">Outcome</span><p>Platform-ready short- and long-form video across multiple clients, with turnaround scaled to each project&rsquo;s scope.</p></div>
+          </div></div>
         </div>
       </div>
     </div>
@@ -1485,6 +1594,17 @@
     } else if (heroVid && reduced) {
       heroVid.classList.add('video-off');
     }
+
+    /* Case-study accordions */
+    Array.prototype.forEach.call(document.querySelectorAll('.cs-toggle'), function (btn) {
+      btn.addEventListener('click', function () {
+        var panel = btn.nextElementSibling;
+        var open = panel.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        var lbl = btn.querySelector('.cs-label-text');
+        if (lbl) lbl.textContent = open ? 'Hide case study' : 'Read the case study';
+      });
+    });
 
     /* Media lightbox (zoom toggles) */
     var lb = document.getElementById('lightbox');
