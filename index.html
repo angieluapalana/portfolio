@@ -829,21 +829,20 @@
   }
   .cs-steps li {
     counter-increment: cs;
-    display: flex;
-    gap: 12px;
-    align-items: baseline;
+    position: relative;
+    padding-left: 30px;
     font-size: 14px;
     color: var(--ink-soft);
     line-height: 1.6;
   }
   .cs-steps li::before {
     content: counter(cs, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.2em;
     font-family: var(--font-mono);
     font-size: 10px;
     color: var(--accent);
-    flex: none;
-    min-width: 18px;
-    padding-top: 2px;
   }
   .cs-steps li b, .cs-block p b { color: var(--ink); font-weight: 600; }
 
@@ -1474,7 +1473,6 @@
       <a class="cta-btn" href="mailto:angieluapalana@gmail.com" style="font-size: 14px;"><span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg></span>Start by saying hi</a>
       <div class="contact-links">
         <a href="mailto:angieluapalana@gmail.com">Email</a>
-        <a href="https://www.canva.com/design/DAF7evhx7Bo/exIat9hpSM7OarzM6yJQ3g/view?utm_content=DAF7evhx7Bo&amp;utm_campaign=designshare&amp;utm_medium=link&amp;utm_source=editor" target="_blank" rel="noopener">Full CV</a>
         <a href="https://www.linkedin.com/in/angielupalana/" target="_blank" rel="noopener">LinkedIn</a>
         <a href="https://www.facebook.com/aaangielupalana" target="_blank" rel="noopener">Facebook</a>
         <a href="https://www.instagram.com/aaaanjjj___" target="_blank" rel="noopener">Instagram</a>
