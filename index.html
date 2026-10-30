@@ -1119,6 +1119,211 @@
     .hero h1 { font-size: clamp(38px, 12vw, 44px); }
   }
 
+
+  /* ============ ReactBits-style effects (vanilla) ============ */
+
+  /* 1. Shiny text — logo "anj." (motion only) */
+  @media (prefers-reduced-motion: no-preference) {
+    .brand {
+      background: linear-gradient(110deg, var(--ink) 0%, var(--ink) 42%, var(--pop) 50%, var(--ink) 58%, var(--ink) 100%);
+      background-size: 220% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      animation: anj-shine 5.5s linear infinite;
+    }
+    .brand::after { -webkit-text-fill-color: var(--accent); color: var(--accent); }
+  }
+  @keyframes anj-shine {
+    from { background-position: 200% center; }
+    to   { background-position: -200% center; }
+  }
+
+  /* 4. Logo loop — Tools */
+  .logo-loop {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  }
+  .logo-loop-row { overflow: hidden; }
+  .logo-track {
+    display: flex;
+    gap: 14px;
+    width: max-content;
+    animation: logo-left 42s linear infinite;
+  }
+  .logo-track.reverse { animation: logo-right 48s linear infinite; }
+  .logo-loop-row:hover .logo-track { animation-play-state: paused; }
+  @keyframes logo-left  { from { transform: translateX(0); }      to { transform: translateX(-50%); } }
+  @keyframes logo-right { from { transform: translateX(-50%); }   to { transform: translateX(0); } }
+  .logo-chip {
+    flex: none;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+    color: var(--ink-soft);
+    padding: 12px 22px;
+    border: 1px solid var(--glass-border);
+    border-radius: 999px;
+    background: var(--glass-strong);
+    white-space: nowrap;
+    transition: color .2s ease, border-color .2s ease;
+  }
+  .logo-chip:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* 5. Folder float — Services cards */
+  .service-grid .card {
+    animation: folder-bob 7s ease-in-out infinite;
+  }
+  .service-grid .card:nth-child(3n+2) { animation-delay: -2.3s; }
+  .service-grid .card:nth-child(3n)   { animation-delay: -4.5s; }
+  .service-grid .card::before {
+    content: "";
+    position: absolute;
+    top: -9px; left: 26px;
+    width: 54px; height: 14px;
+    border-radius: 7px 7px 0 0;
+    background: var(--glass-strong);
+    border: 1px solid var(--glass-border);
+    border-bottom: none;
+  }
+  @keyframes folder-bob {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+  .service-grid .card:hover {
+    transform: translateY(-11px);
+    animation-play-state: paused;
+    box-shadow: 0 26px 46px -26px rgba(var(--shadow), 0.5);
+  }
+
+  /* 6. Holo card — email marketing */
+  .holo { transition: transform .18s ease-out; }
+  .holo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 4;
+    background:
+      linear-gradient(110deg, transparent 18%,
+        rgba(255,255,255,0.45) 42%,
+        rgba(120,170,255,0.30) 49%,
+        rgba(255,150,210,0.26) 56%,
+        transparent 82%);
+    background-size: 240% 240%;
+    background-position: var(--holo-x, 50%) var(--holo-y, 50%);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transition: opacity .3s ease;
+  }
+  .holo:hover::after { opacity: 1; }
+
+  /* 7. Lanyard — about photo */
+  .lanyard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 6px;
+  }
+  .lanyard-strap {
+    width: 24px; height: 58px;
+    border-radius: 3px 3px 0 0;
+    background:
+      repeating-linear-gradient(48deg, rgba(255,255,255,0.22) 0 4px, transparent 4px 9px),
+      linear-gradient(var(--accent), var(--pop));
+    box-shadow: inset 0 0 0 1px var(--glass-border);
+  }
+  .lanyard-clip {
+    width: 32px; height: 17px;
+    margin-top: -4px;
+    border-radius: 5px;
+    background: linear-gradient(#d6dbe2, #9aa3af);
+    border: 1px solid rgba(0,0,0,0.18);
+    position: relative;
+    z-index: 2;
+  }
+  .lanyard-clip::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 54%;
+    transform: translate(-50%, -50%);
+    width: 9px; height: 5px;
+    border-radius: 3px;
+    background: var(--canvas);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.35);
+  }
+  .id-badge {
+    width: 100%;
+    margin-top: -3px;
+    background: var(--glass-strong);
+    border: 1px solid var(--glass-border);
+    border-radius: 1.4rem;
+    padding: 15px 15px 17px;
+    box-shadow: 0 24px 50px -30px rgba(var(--shadow), 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .id-hole {
+    display: block;
+    width: 46px; height: 7px;
+    margin: 2px auto 13px;
+    border-radius: 4px;
+    background: rgba(var(--shadow), 0.22);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
+  }
+  .id-badge .about-photo {
+    aspect-ratio: 1 / 1;
+    box-shadow: none;
+    border-radius: 1rem;
+  }
+  .id-info { text-align: center; margin-top: 14px; }
+  .id-name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .id-role {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 6px;
+    line-height: 1.55;
+  }
+  .lanyard-card {
+    transform-origin: top center;
+    animation: lanyard-sway 6s ease-in-out infinite;
+    will-change: transform;
+    cursor: grab;
+    touch-action: none;
+  }
+  .lanyard-card.dragging { animation: none; cursor: grabbing; }
+  @keyframes lanyard-sway {
+    0%, 100% { transform: rotate(-3deg); }
+    50%      { transform: rotate(3deg); }
+  }
+
+  /* Reduced-motion: freeze every added effect */
+  @media (prefers-reduced-motion: reduce) {
+    .service-grid .card,
+    .logo-track,
+    .lanyard-card { animation: none !important; }
+    .logo-loop { -webkit-mask-image: none; mask-image: none; }
+    .logo-track { flex-wrap: wrap; width: auto; }
+    .holo::after { display: none; }
+  }
+
 </style>
 </head>
 <body>
@@ -1189,8 +1394,19 @@
 
   <section id="about" class="reveal">
     <div class="about-grid">
-      <div class="about-photo">
-        <img src="anj.jpg" alt="Anj Palana">
+      <div class="lanyard" id="lanyard">
+        <span class="lanyard-strap" aria-hidden="true"></span>
+        <span class="lanyard-clip" aria-hidden="true"></span>
+        <div class="id-badge lanyard-card" id="lanyardCard">
+          <span class="id-hole" aria-hidden="true"></span>
+          <div class="about-photo">
+            <img src="anj.jpg" alt="Anj Palana" draggable="false">
+          </div>
+          <div class="id-info">
+            <span class="id-name">Anj Palana</span>
+            <span class="id-role">Creative Operations &amp; Marketing Partner</span>
+          </div>
+        </div>
       </div>
       <div class="about-text">
         <span class="eyebrow">Why work with me</span>
@@ -1269,7 +1485,7 @@
       <p class="measure">A closer look at what's shipped recently — the <span class="hl-soft">brief, the process, and the turnaround</span> behind each build.</p>
     </div>
     <div class="work-grid">
-      <div class="card work-card">
+      <div class="card work-card holo">
         <div class="work-thumb media-frame">
           <!-- Google Drive embed. To swap later, replace this iframe with your own
                <img> or <video src="..." autoplay muted loop playsinline> -->
@@ -1289,7 +1505,7 @@
           </div></div>
         </div>
       </div>
-      <div class="card work-card">
+      <div class="card work-card holo">
         <div class="work-thumb media-frame">
           <!-- Canva embed (Goodlife with Lindsay deck). Swap with your own <img>/<video> anytime. -->
           <button class="zoom-btn" type="button" data-preview="https://www.canva.com/design/DAGp9PuJxBw/PJr_ZOo_1uxEv6KVQTIEZA/view?embed" aria-label="Expand media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg></button>
@@ -1308,7 +1524,7 @@
           </div></div>
         </div>
       </div>
-      <div class="card work-card">
+      <div class="card work-card holo">
         <div class="work-thumb-pair">
           <div class="media-slot portrait media-frame">
             <!-- Google Drive embed (Email marketing — slot 1). Swap with your own <img>/<video> anytime. -->
@@ -1334,7 +1550,7 @@
           </div></div>
         </div>
       </div>
-      <div class="card work-card">
+      <div class="card work-card holo">
         <div class="work-thumb-pair">
           <div class="media-slot portrait media-frame">
             <!-- Google Drive embed (Social content — slot 1). Swap with your own <img>/<video> anytime. -->
@@ -1370,31 +1586,9 @@
         <h2>Tools I <span class="hl-mark">run on</span></h2>
       </div>
     </div>
-    <div class="tool-groups">
-      <div class="tool-group">
-        <h3>Design &amp; content</h3>
-        <ul class="tool-list">
-          <li>Canva</li><li>CapCut</li><li>iMovie</li><li>Playground</li>
-        </ul>
-      </div>
-      <div class="tool-group">
-        <h3>Sites &amp; funnels</h3>
-        <ul class="tool-list">
-          <li>WordPress</li><li>ShowIt</li><li>GoHighLevel</li><li>Klaviyo</li><li>Mailerlite</li>
-        </ul>
-      </div>
-      <div class="tool-group">
-        <h3>Ops &amp; project mgmt</h3>
-        <ul class="tool-list">
-          <li>Asana</li><li>Trello</li><li>JIRA</li><li>Notion</li><li>Skool</li>
-        </ul>
-      </div>
-      <div class="tool-group">
-        <h3>Comms &amp; workspace</h3>
-        <ul class="tool-list">
-          <li>Google Workspace</li><li>Microsoft Workspace</li><li>Slack</li><li>Teams</li><li>Metricool</li>
-        </ul>
-      </div>
+    <div class="logo-loop" role="list" aria-label="Tools I run on">
+      <div class="logo-loop-row"><div class="logo-track"><span class="logo-chip">Canva</span><span class="logo-chip">CapCut</span><span class="logo-chip">iMovie</span><span class="logo-chip">Playground</span><span class="logo-chip">WordPress</span><span class="logo-chip">ShowIt</span><span class="logo-chip">GoHighLevel</span><span class="logo-chip">Klaviyo</span><span class="logo-chip">Mailerlite</span><span class="logo-chip">Asana</span><span class="logo-chip">Canva</span><span class="logo-chip">CapCut</span><span class="logo-chip">iMovie</span><span class="logo-chip">Playground</span><span class="logo-chip">WordPress</span><span class="logo-chip">ShowIt</span><span class="logo-chip">GoHighLevel</span><span class="logo-chip">Klaviyo</span><span class="logo-chip">Mailerlite</span><span class="logo-chip">Asana</span></div></div>
+      <div class="logo-loop-row"><div class="logo-track reverse"><span class="logo-chip">Trello</span><span class="logo-chip">JIRA</span><span class="logo-chip">Notion</span><span class="logo-chip">Skool</span><span class="logo-chip">Google Workspace</span><span class="logo-chip">Microsoft Workspace</span><span class="logo-chip">Slack</span><span class="logo-chip">Teams</span><span class="logo-chip">Metricool</span><span class="logo-chip">Trello</span><span class="logo-chip">JIRA</span><span class="logo-chip">Notion</span><span class="logo-chip">Skool</span><span class="logo-chip">Google Workspace</span><span class="logo-chip">Microsoft Workspace</span><span class="logo-chip">Slack</span><span class="logo-chip">Teams</span><span class="logo-chip">Metricool</span></div></div>
     </div>
   </section>
 
@@ -1715,6 +1909,105 @@
     toTop.addEventListener('click', function () {
       window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
     });
+
+    /* ============ ReactBits-style effects (vanilla) ============ */
+
+    /* 2. Click spark — subtle burst on buttons/CTAs */
+    if (!reduced) {
+      var sc = document.createElement('canvas');
+      sc.setAttribute('aria-hidden', 'true');
+      sc.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999;';
+      document.body.appendChild(sc);
+      var sctx = sc.getContext('2d');
+      function sizeSpark() {
+        var d = window.devicePixelRatio || 1;
+        sc.width = innerWidth * d; sc.height = innerHeight * d;
+        sctx.setTransform(d, 0, 0, d, 0, 0);
+      }
+      sizeSpark();
+      addEventListener('resize', sizeSpark);
+      var sparks = [], sparkRaf = false;
+      function sparkColor() {
+        return (getComputedStyle(root).getPropertyValue('--pop') || '#3f6ad8').trim();
+      }
+      function sparkStep() {
+        sctx.clearRect(0, 0, innerWidth, innerHeight);
+        for (var i = sparks.length - 1; i >= 0; i--) {
+          var s = sparks[i];
+          s.x += s.vx; s.y += s.vy; s.vx *= 0.86; s.vy *= 0.86; s.life -= 0.05;
+          if (s.life <= 0) { sparks.splice(i, 1); continue; }
+          sctx.globalAlpha = Math.max(s.life, 0);
+          sctx.strokeStyle = s.col; sctx.lineWidth = 2; sctx.lineCap = 'round';
+          sctx.beginPath();
+          sctx.moveTo(s.x, s.y);
+          sctx.lineTo(s.x - s.vx * 2.2, s.y - s.vy * 2.2);
+          sctx.stroke();
+        }
+        sctx.globalAlpha = 1;
+        if (sparks.length) { requestAnimationFrame(sparkStep); } else { sparkRaf = false; }
+      }
+      function burst(x, y) {
+        var n = 9, col = sparkColor();
+        for (var i = 0; i < n; i++) {
+          var a = (Math.PI * 2 * i) / n + (Math.random() - 0.5) * 0.4;
+          var sp = 2.4 + Math.random() * 2.4;
+          sparks.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, col: col });
+        }
+        if (!sparkRaf) { sparkRaf = true; requestAnimationFrame(sparkStep); }
+      }
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('button, .cta-btn')) burst(e.clientX, e.clientY);
+      }, true);
+    }
+
+    /* 6. Holo card — pointer tilt + sheen on the work cards */
+    if (!reduced) {
+      Array.prototype.forEach.call(document.querySelectorAll('.holo'), function (holo) {
+        holo.addEventListener('pointermove', function (e) {
+          var r = holo.getBoundingClientRect();
+          var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+          var rx = (py - 0.5) * -7, ry = (px - 0.5) * 7;
+          holo.style.transform = 'perspective(900px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+          holo.style.setProperty('--holo-x', (px * 100) + '%');
+          holo.style.setProperty('--holo-y', (py * 100) + '%');
+        });
+        holo.addEventListener('pointerleave', function () { holo.style.transform = ''; });
+      });
+    }
+
+    /* 7. Lanyard — drag to swing, damped spring back */
+    var lc = document.getElementById('lanyardCard'), ly = document.getElementById('lanyard');
+    if (lc && ly && !reduced) {
+      var dragging = false, pivot = null, curRot = 0;
+      lc.addEventListener('pointerdown', function (e) {
+        dragging = true;
+        lc.classList.add('dragging');
+        var r = ly.getBoundingClientRect();
+        pivot = { x: r.left + r.width / 2, y: r.top + 8 };
+        try { lc.setPointerCapture(e.pointerId); } catch (err) {}
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - pivot.x, dy = Math.max(e.clientY - pivot.y, 12);
+        var ang = Math.atan2(dx, dy) * 180 / Math.PI;
+        curRot = Math.max(-34, Math.min(34, ang));
+        lc.style.transform = 'rotate(' + curRot + 'deg)';
+      });
+      window.addEventListener('pointerup', function () {
+        if (!dragging) return;
+        dragging = false;
+        var amp = curRot, t0 = performance.now();
+        function spring(now) {
+          var el = (now - t0) / 1000;
+          var ang = amp * Math.cos(el * 7) * Math.exp(-el * 2.3);
+          lc.style.transform = 'rotate(' + ang + 'deg)';
+          if (el < 2.4) { requestAnimationFrame(spring); }
+          else { lc.style.transform = ''; lc.classList.remove('dragging'); }
+        }
+        requestAnimationFrame(spring);
+      });
+    }
+
   })();
 </script>
 
